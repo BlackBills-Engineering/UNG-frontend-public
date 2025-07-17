@@ -19,6 +19,26 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
+// Функция для вызова API остановки пампа
+const stopPump = async (pumpId: string) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/pumps/${pumpId}/stop`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Pump stopped successfully:", data);
+    } else {
+      console.error("Error stopping pump:", data);
+    }
+  } catch (error) {
+    console.error("API request failed:", error);
+  }
+};
+
 export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
@@ -86,8 +106,17 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
     setProducts((prev) => prev.filter((p) => p.id !== id));
   };
 
-  const removePump = (uuid: string) => {
-    setPumps((prev) => prev.filter((p) => p.uuid !== uuid));
+  const removePump = async (uuid: string) => {
+    // 1. Останавливаем насос через API
+    const pumpToRemove = pumps.find((p) => p.uuid === uuid);
+    if (pumpToRemove) {
+      await stopPump(pumpToRemove.pumpId.toString()); // передаем pumpId в API
+
+      // 2. Если насос успешно остановлен, удаляем его из корзины
+      setPumps((prev) => prev.filter((p) => p.uuid !== uuid));
+    } else {
+      console.error("Pump not found for uuid:", uuid);
+    }
   };
 
   return (
