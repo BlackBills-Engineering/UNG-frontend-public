@@ -20,7 +20,6 @@ import type { Good } from "@/types/goods";
 import type { PaymentInfo } from "@/types/paymentInfo";
 import Alert from "@mui/material/Alert";
 
-
 export const CartSheet: React.FC = () => {
   const {
     products,
@@ -56,9 +55,7 @@ export const CartSheet: React.FC = () => {
   };
 
   // отфильтруем только те ТРК, у которых есть ключ в selectedItems
-  const selectedPumpItems = pumps.filter((cp) =>
-    selectedItems.has(cp.uuid)
-  );
+  const selectedPumpItems = pumps.filter((cp) => selectedItems.has(cp.uuid));
 
   // отфильтруем только те продукты, у которых есть ключ в selectedItems
   const selectedProductItems = products.filter((p) => {
@@ -121,49 +118,74 @@ export const CartSheet: React.FC = () => {
 
     try {
       // 2) POST — создаём оплату
-      await postCheck(id, goods, paymentInfo);
+      const res = await postCheck(id, goods, paymentInfo);
 
+      if (!res.ok) {
+        throw new Error("Failed to create payment");
+      }
+      console.log(res);
+
+      if (res.ok) {
+        selectedPumpItems.forEach((cp) => removePump(cp.uuid));
+        selectedProductItems.forEach((p) => removeProduct(p.id));
+        setSelectedItems(new Set());
+        setIsCheckout(false);
+        setAlertInfo({
+          severity: "success",
+          message: t("payment_status.success"),
+        });
+      } else {
+        setAlertInfo({
+          severity: "error",
+          message: t("payment_status.canceled"),
+        });
+        console.warn("Оплата отменена или не удалась");
+      }
+      
       // 3) Запускаем опрос статуса
-      const interval = setInterval(async () => {
-        try {
-          const res = await getCheck(id);
-          const status = res.status; // ожидаем { status: "pending" | "success" | "canceled", ... }
-          console.log(status);
-          
-          if (status !== "Pending") {
-            clearInterval(interval);
+      // const interval = setInterval(async () => {
+      //   try {
+      //     const res = await getCheck(id);
+      //     const status = res.status; // ожидаем { status: "pending" | "success" | "canceled", ... }
+      //     console.log(status);
 
-            if (status === "Success") {
-              setAlertInfo({
-                severity: "success",
-                message: t("payment_status.success"),
-              });
-              // Удаляем из корзины всё, что оплатили
-              selectedPumpItems.forEach((cp) => removePump(cp.uuid));
-              selectedProductItems.forEach((p) => removeProduct(p.id));
-              // Сбрасываем выделение (чтобы ничего не осталось "выделенным")
-              setSelectedItems(new Set());
-              setIsCheckout(false);
+      //     if (status !== "Pending") {
+      //       clearInterval(interval);
 
-              // И только после этого закрываем корзину
-              // closeCart();
-            } else {
-              // статус canceled или иной
-              // показать пользователю ошибку / отмену
-              setAlertInfo({
-                severity: "error",
-                message: t("payment_status.canceled"),
-              });
-              console.warn("Оплата отменена или не удалась");
-            }
-          }
-        } catch (err) {
-          console.error("Ошибка при проверке статуса:", err);
-        }
-      }, 2000);
+      //       if (status === "Success") {
+      //         setAlertInfo({
+      //           severity: "success",
+      //           message: t("payment_status.success"),
+      //         });
+      //         // Удаляем из корзины всё, что оплатили
+      //         selectedPumpItems.forEach((cp) => removePump(cp.uuid));
+      //         selectedProductItems.forEach((p) => removeProduct(p.id));
+      //         // Сбрасываем выделение (чтобы ничего не осталось "выделенным")
+      //         setSelectedItems(new Set());
+      //         setIsCheckout(false);
+
+      //         // И только после этого закрываем корзину
+      //         // closeCart();
+      //       } else {
+      //         // статус canceled или иной
+      //         // показать пользователю ошибку / отмену
+      //         setAlertInfo({
+      //           severity: "error",
+      //           message: t("payment_status.canceled"),
+      //         });
+      //         console.warn("Оплата отменена или не удалась");
+      //       }
+      //     }
+      //   } catch (err) {
+      //     console.error("Ошибка при проверке статуса:", err);
+      //   }
+      // }, 2000);
     } catch (err) {
       console.error("Ошибка при отправке оплаты:", err);
-      setAlertInfo({ severity: "error", message: t("payment_status.canceled") });
+      setAlertInfo({
+        severity: "error",
+        message: t("payment_status.canceled"),
+      });
       // показать пользователю ошибку
     }
   };
@@ -171,7 +193,7 @@ export const CartSheet: React.FC = () => {
     if (!alertInfo) return;
     const timer = setTimeout(() => {
       setAlertInfo(null);
-    }, 3000); 
+    }, 3000);
     return () => clearTimeout(timer);
   }, [alertInfo]);
   return (
