@@ -11,7 +11,7 @@ import { useCart } from "../hooks/useCart";
 import { useTranslation } from "react-i18next";
 import { ShoppingBag, ShoppingBasket, Trash2 } from "lucide-react";
 import PumpIcon from "../ui/PumpIcon";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PaymentMethodSelector from "./PaymentSelector";
 import { v4 as uuidv4 } from "uuid";
 import { postCheck } from "../actions/postCheck";
@@ -19,6 +19,7 @@ import { getCheck } from "../actions/getCheck";
 import type { Good } from "@/types/goods";
 import type { PaymentInfo } from "@/types/paymentInfo";
 import Alert from "@mui/material/Alert";
+import { PumpContext } from "../context/PumpContext"; 
 
 export const CartSheet: React.FC = () => {
   const {
@@ -32,6 +33,7 @@ export const CartSheet: React.FC = () => {
     removePump,
   } = useCart();
   const { t } = useTranslation();
+  const frames = useContext(PumpContext); 
 
   const [isCheckout, setIsCheckout] = useState(false);
 
@@ -52,6 +54,12 @@ export const CartSheet: React.FC = () => {
       else next.add(key);
       return next;
     });
+  };
+
+  // Функция получения статуса колонки из контекста
+  const getPumpStatus = (pumpId: number) => {
+    const frame = frames[pumpId];
+    return frame ? frame.status : null;
   };
 
   // отфильтруем только те ТРК, у которых есть ключ в selectedItems
@@ -141,7 +149,7 @@ export const CartSheet: React.FC = () => {
         });
         console.warn("Оплата отменена или не удалась");
       }
-      
+
       // 3) Запускаем опрос статуса
       // const interval = setInterval(async () => {
       //   try {
@@ -312,12 +320,14 @@ export const CartSheet: React.FC = () => {
                       </div>
 
                       {/* кнопка удаления */}
-                      <button
-                        onClick={() => removePump(cp.uuid)}
-                        className="text-red-500 p-2 rounded-full bg-red-500/20 ml-4"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      {getPumpStatus(cp.pumpId) === "AUTHORIZED" && (
+                        <button
+                          onClick={() => removePump(cp.uuid)}
+                          className="text-red-500 p-2 rounded-full bg-red-500/20 ml-4"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      )}
                     </label>
                   </div>
                 );
