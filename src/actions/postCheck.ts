@@ -6,7 +6,7 @@ export const postCheck = async (
   id: string,
   goods: Good[],
   paymentInfo: PaymentInfo[]
-): Promise<void> => {
+) => {
   const url = "http://localhost:80/ung/hs/billsqueque/billpost/";
 
   const body = JSON.stringify({ id, goods, paymentInfo });
@@ -27,6 +27,7 @@ export const postCheck = async (
     throw new Error(`postCheck failed ${resp.status}: ${text}`);
   }
 
+  return resp;
   // const data = await resp.json();
   // return data;
 };
