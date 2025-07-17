@@ -1,0 +1,87 @@
+{
+  "header": {
+    "title": "Mening POS",
+    "home": "Bosh sahifa",
+    "shop": "Do‘kon",
+    "searchPlaceholder": "Qidirish..."
+  },
+  "categories": {
+    "products": "Maxsulotlar",
+    "fruits": "Mevalar",
+    "drinks": "Ichimliklar",
+    "snacks": "Snaklar"
+  },
+  "buttons": {
+    "fuelType": "АI-{{grade}}",
+    "unit": "so'm/litr",
+    "trk": "ТRК-{{number}}"
+  },
+  "modal": {
+    "title": "ТRК-{{number}} (АI-{{grade}}) ishga tushurish",
+    "liters": "Litr: ",
+    "price": "Narx: ",
+    "cancel": "Bekor qilish",
+    "confirm": "Tasdiqlash"
+  },
+  "products": {
+    "oranges": "Apelsin",
+    "bananas": "Banan",
+    "apples": "Olma",
+    "milk": "Sut",
+    "coffee": "Qahva",
+    "chips": "Chips",
+    "chocolate": "Shokolad",
+    "nuts": "Yong‘oq",
+    "kurt": "Qurt"
+  },
+  "common": {
+    "soums": "so‘m"
+  },
+
+  "cart": {
+    "title": "Savatcha",
+    "trk": "ТRК-{{number}} (AI-{{grade}})",
+    "empty": "Savatchangiz bo'sh",
+    "total": "Jami: ",
+    "checkout": "Buyurtmani rasmiylashtirish",
+    "remove": "O'chirish",
+    "close": "Yopish",
+    "payment": "To'lov",
+    "productsTotal": "Jami mahsulotlar: ",
+    "fuelTotal": "Jami benzin: ",
+    "returnCart": "Savatchaga qaytish"
+  },
+  "pumpTransaction": {
+    "liters": "Litr",
+    "sum": "Jami",
+    "grade": "Benzin",
+    "real_time": "Joriy to‘ldirish: ",
+    "transaction": "Tranzaksiya: ",
+    "last_transaction": "So‘nggi tranzaksiya: ",
+    "noData": "Ma'lumot yo‘q"
+  },
+  "status": {
+    "IDLE": "Kutish",
+    "CALLING": "Chaqirish",
+    "AUTHORIZED": "Ruxsat berildi",
+    "DISPENSING": "To‘ldirish",
+    "COMPLETE": "Tugatildi",
+    "STOPPED": "To‘xtatildi",
+    "ERROR": "Xato",
+    "OFFLINE": "Offlayn"
+  },
+  "payment_types": {
+    "select": "To‘lov turini tanlang",
+    "cash": "Naqd",
+    "card": "Karta",
+    "click": "Click",
+    "uzum": "Uzum",
+    "payme": "Payme",
+    "corporate": "Korporativ"
+  },
+  "payment_status": {
+    "pending": "Kutilmoqda",
+    "success": "Muvaffaqiyatli",
+    "canceled": "Bekor qilindi"
+  }
+}

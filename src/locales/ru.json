@@ -1,0 +1,86 @@
+{
+  "header": {
+    "title": "Моё ПОС",
+    "home": "Главная",
+    "shop": "Магазин",
+    "searchPlaceholder": "Поиск товаров..."
+  },
+  "categories": {
+    "products": "Товары",
+    "fruits": "Фрукты",
+    "drinks": "Напитки",
+    "snacks": "Снеки"
+  },
+  "buttons": {
+    "fuelType": "АИ-{{grade}}",
+    "unit": "сум/литр",
+    "trk": "ТРК-{{number}}"
+  },
+  "modal": {
+    "title": "Запустить ТРК-{{number}} (АИ-{{grade}})",
+    "liters": "Литры: ",
+    "price": "Стоимость: ",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить"
+  },
+  "products": {
+    "oranges": "Апельсины",
+    "bananas": "Бананы",
+    "apples": "Яблоки",
+    "milk": "Молоко",
+    "coffee": "Кофе",
+    "chips": "Чипсы",
+    "chocolate": "Шоколад",
+    "nuts": "Орехи",
+    "kurt": "Курт"
+  },
+  "common": {
+    "soums": "сум"
+  },
+  "cart": {
+    "title": "Корзина",
+    "trk": "ТРК-{{number}} (АИ-{{grade}})",
+    "empty": "Ваша корзина пуста",
+    "total": "Итого: ",
+    "checkout": "Оформить заказ",
+    "remove": "Удалить",
+    "close": "Закрыть",
+    "payment": "Оплата",
+    "productsTotal": "Всего товаров: ",
+    "fuelTotal": "Всего топлива: ",
+    "returnCart": "Вернуться в корзину"
+  },
+  "pumpTransaction": {
+    "liters": "Литры",
+    "sum": "Сумма",
+    "grade": "Бензин",
+    "real_time": "Заливка: ",
+    "transaction": "Транзакция: ",
+    "last_transaction": "Последняя транзакция: ",
+    "noData": "Нет данных"
+  },
+  "status": {
+    "IDLE": "Ожидание",
+    "CALLING": "Вызов",
+    "AUTHORIZED": "Авторизовано",
+    "DISPENSING": "Заливка",
+    "COMPLETE": "Завершено",
+    "STOPPED": "Остановлено",
+    "ERROR": "Ошибка", 
+    "OFFLINE": "Оффлайн"
+  },
+  "payment_types":{
+    "select": "Выберите способ оплаты",
+    "cash": "Наличные",
+    "card": "Карта",
+    "click": "Click",
+    "uzum": "Uzum",
+    "payme": "Payme",
+    "corporate": "Корпоратив"
+  },
+  "payment_status": {
+    "pending": "Ожидание",
+    "success": "Успешно",
+    "canceled": "Отменено"
+  }
+}
