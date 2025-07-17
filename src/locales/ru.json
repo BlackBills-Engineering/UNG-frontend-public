@@ -3,7 +3,8 @@
     "title": "Моё ПОС",
     "home": "Главная",
     "shop": "Магазин",
-    "searchPlaceholder": "Поиск товаров..."
+    "searchPlaceholder": "Поиск товаров...",
+    "stop": "Аварийное выключение"
   },
   "categories": {
     "products": "Товары",
